@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# Utility to download Grateful Dead soundboards that are normally only available as streaming audio on the LMA
-
-# Arguments - URL of dead show (archive.org only)
+# Arguments - URL
 
 HTMLVARS=$(curl --compressed -s $1 | grep -e \'server\' -e mainDir | cut -d \" -f 2)
 URL=$(echo $HTMLVARS | tr -d " ")"/"
@@ -11,12 +9,3 @@ DLDIR=$(echo $URL | cut -d \/ -f 4)
 mkdir -p $DLDIR 
 echo $FILELIST | xargs -n 1 -P 10 wget -P $DLDIR -c 
 
-#old non-parallel code
-#DOWNLOADLIST=$(for i in $FILELIST
-#do 
-#	echo ${URL}${i}
-#done)
-#echo $FILELIST | parallel wget $URL
-
-#echo "hello world"
-#echo $DOWNLOADLIST
